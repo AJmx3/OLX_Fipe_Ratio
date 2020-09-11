@@ -5,7 +5,7 @@ from olx import OLX
 from olx import get_soup_instance
 
 if len(sys.argv) < 3:
-        print("USAGE: %s <base_url> <min_ratio>")
+        print("USAGE: %s <base_url> <min_ratio>" % sys.argv[0])
         exit(1)
 else:
         base_url = sys.argv[1]
