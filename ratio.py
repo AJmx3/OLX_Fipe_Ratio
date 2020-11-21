@@ -24,24 +24,25 @@ except Exception:
 def execute(urls):
 	page_count = 1
 	for url in urls:
-		print("PAGE", page_count)
+		#print("PAGE", page_count)
 		page_count += 1
 		page = o.get_page(url)
-		for listing_url in page:
-			listing_soup = get_soup_instance(listing_url)
-			if not listing_soup:
-				print("Listing soup download failed", listing_url)
-				continue
-			listing = o.get_fipe_from_listing_soup(listing_soup)
-			if listing:
-				try:
-					ratio = listing.price/listing.fipe
-					if ratio < MIN_RATIO:
-						if listing.leilao:
-							print("LEILAO! ", end='')
-						print(f"{listing.year} {listing.model} {listing.version} R${listing.price:.2f} (FIPE R${listing.fipe:.2f}, {ratio*100:.2f}%) {listing_url}")
-				except Exception as e:
-					print('Fipe price is 0?:',str(e))
+		if page:
+			for listing_url in page:
+				listing_soup = get_soup_instance(listing_url)
+				if not listing_soup:
+					print("Listing soup download failed", listing_url)
+					continue
+				listing = o.get_fipe_from_listing_soup(listing_soup)
+				if listing:
+					try:
+						ratio = listing.price/listing.fipe
+						if ratio < MIN_RATIO:
+							if listing.leilao:
+								print("LEILAO! ", end='')
+							print(f"{listing.year} {listing.model} {listing.version} R${listing.price:.2f} (FIPE R${listing.fipe:.2f}, {ratio*100:.2f}%) {listing_url}")
+					except Exception as e:
+						print('Fipe price is 0?:',str(e))
 
 print("Showing listings with ratio better than %s" % (MIN_RATIO))
 

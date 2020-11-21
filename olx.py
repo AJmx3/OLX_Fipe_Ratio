@@ -167,7 +167,6 @@ class OLX():
 				lis.leilao = leilao
 				return lis
 			except Exception as e:
-				print('Failed to parse FIPE price', str(e), data.content)
 				return None
 		else:
 			return None
